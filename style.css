@@ -21,7 +21,7 @@ body {
     background: var(--bg-primary);
     background-image: 
     linear-gradient(rgba(10, 10, 10, 0.6), rgba(10, 10, 10, 0.8)),
-    url('img/backgroundapp.jpg');
+    url('imag/backgroundapp.jpg');
     background-size: cover;
     background-position: center;
     background-attachment: fixed; /* Opcional: hace que el fondo no se mueva al hacer scroll */
