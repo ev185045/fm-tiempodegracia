@@ -1,0 +1,1243 @@
+/* Reset y variables */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --bg-primary: #0a0a0a;
+    --bg-card: #1a1a1a;
+    --text-primary: #ffffff;
+    --text-secondary: #cccccc;
+    --text-muted: #888888;
+    --accent: #ffffff;
+    --border-light: #333333;
+    --fuente-titulos: 'Playfair Display', serif;
+    --fuente-textos: 'Inter', system-ui, -apple-system, sans-serif;
+}
+
+body {
+    background: var(--bg-primary);
+    background-image: 
+    linear-gradient(rgba(10, 10, 10, 0.6), rgba(10, 10, 10, 0.8)),
+    url('img/backgroundapp.jpg');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed; /* Opcional: hace que el fondo no se mueva al hacer scroll */
+    background-repeat: no-repeat;
+    color: var(--text-primary);
+    font-family: var(--fuente-textos);
+    font-size: 16px;
+    line-height: 1.6;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 20px 16px;
+}
+
+#app {
+    max-width: 420px;
+    width: 100%;
+    background: transparent;
+    border-radius: 32px;
+    overflow: hidden;
+    padding: 0 0 30px;
+}
+
+/* ===== HERO / ENCABEZADO ===== */
+.hero {
+    position: relative;
+    text-align: center;
+    padding: 20px 0 10px;
+}
+
+.logo-container {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 12px;
+}
+
+#logo {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 3px solid rgba(255, 255, 255, 0.15);
+    box-shadow: 0 0 40px rgba(255, 255, 255, 0.05);
+    background: #1a1a1a;
+}
+
+.hero h1 {
+    font-family: var(--fuente-titulos);
+    font-weight: 700;
+    font-size: 2.2rem;
+    letter-spacing: -0.5px;
+    color: #ffffff;
+    text-shadow: 0 2px 20px rgba(0,0,0,0.5);
+    margin-bottom: 2px;
+}
+
+.subtitulo {
+    font-size: 0.95rem;
+    font-weight: 300;
+    color: var(--text-secondary);
+    letter-spacing: 1px;
+}
+
+.iglesia {
+    font-size: 0.88rem;
+    font-weight: 600;
+    color: var(--text-muted);
+    margin-top: 2px;
+}
+
+/* ===== REPRODUCTOR (estilo Base44) ===== */
+#player {
+    margin: 20px 0 28px;
+}
+
+.player-card {
+    background: var(--bg-card);
+    border-radius: 24px;
+    padding: 24px 20px 20px;
+    text-align: center;
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    box-shadow: 0 8px 40px rgba(0, 0, 0, 0.4);
+}
+
+.estado {
+    margin-bottom: 14px;
+}
+
+#estado-texto {
+    font-weight: 600;
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    display: block;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+}
+
+#cancion-actual {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    display: block;
+    margin-top: 4px;
+    font-style: italic;
+}
+
+#play-btn {
+    width: 72px;
+    height: 72px;
+    border-radius: 50%;
+    border: none;
+    background: #ffffff;
+    color: #000000;
+    font-size: 2.2rem;
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 30px rgba(255, 255, 255, 0.15);
+    margin: 0 auto 12px;
+}
+
+#play-btn:hover {
+    transform: scale(1.04);
+    box-shadow: 0 6px 40px rgba(255, 255, 255, 0.25);
+}
+
+#play-btn:active {
+    transform: scale(0.95);
+}
+
+.player-label {
+    font-family: var(--fuente-titulos);
+    font-weight: 700;
+    font-size: 1.1rem;
+    color: #ffffff;
+    letter-spacing: 1px;
+    margin-top: 4px;
+}
+
+.player-sub {
+    font-size: 0.7rem;
+    color: var(--text-muted);
+    letter-spacing: 0.5px;
+    margin-top: -2px;
+}
+
+/* ===== SECCIÃ“N NUESTRA IGLESIA ===== */
+#iglesia {
+    background: var(--bg-card);
+    border-radius: 24px;
+    padding: 18px 20px 16px;
+    margin-bottom: 28px;
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    text-align: center;
+}
+
+#iglesia h2 {
+    font-family: var(--fuente-titulos);
+    font-weight: 400;
+    font-size: 1.1rem;
+    letter-spacing: 2px;
+    color: var(--text-secondary);
+    margin-bottom: 6px;
+}
+
+#iglesia p {
+    font-size: 0.9rem;
+    color: var(--text-primary);
+    font-weight: 400;
+}
+
+#iglesia .anexo {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    font-weight: 300;
+}
+
+/* ===== CHAT ===== */
+#chat {
+    margin-top: 4px;
+}
+
+#chat h2 {
+    font-family: var(--fuente-titulos);
+    font-weight: 400;
+    font-size: 1.2rem;
+    border-bottom: 1px solid var(--border-light);
+    padding-bottom: 8px;
+    margin-bottom: 14px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: #ffffff;
+}
+
+#contador-conectados {
+    font-size: 0.7rem;
+    background: rgba(255,255,255,0.1);
+    color: #fff;
+    padding: 2px 14px;
+    border-radius: 30px;
+    font-family: var(--fuente-textos);
+    font-weight: 400;
+}
+
+#mensajes {
+    background: rgba(255,255,255,0.03);
+    border-radius: 16px;
+    padding: 12px;
+    height: 220px;
+    overflow-y: auto;
+    border: 1px solid rgba(255,255,255,0.06);
+    margin-bottom: 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    font-size: 0.9rem;
+}
+
+.mensaje {
+    display: flex;
+    align-items: baseline;
+    gap: 8px;
+    background: rgba(255,255,255,0.04);
+    padding: 6px 12px;
+    border-radius: 12px;
+    border-left: 3px solid #ffffff;
+    backdrop-filter: blur(2px);
+}
+
+.mensaje .nombre {
+    font-weight: 600;
+    color: #ffffff;
+    font-size: 0.8rem;
+    white-space: nowrap;
+}
+
+.mensaje .texto {
+    color: #e0e0e0;
+    word-break: break-word;
+}
+
+.mensaje .hora {
+    font-size: 0.6rem;
+    color: #666;
+    margin-left: auto;
+    white-space: nowrap;
+}
+
+#entrada-chat {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 4px;
+}
+
+#entrada-chat input,
+#entrada-chat button {
+    padding: 10px 16px;
+    border-radius: 30px;
+    border: 1px solid var(--border-light);
+    font-size: 0.85rem;
+    font-family: var(--fuente-textos);
+    background: rgba(255,255,255,0.05);
+    color: #fff;
+    outline: none;
+    transition: border 0.2s, background 0.2s;
+}
+
+#entrada-chat input::placeholder {
+    color: #777;
+}
+
+#entrada-chat input:focus {
+    border-color: #ffffff;
+    background: rgba(255,255,255,0.08);
+}
+
+#nombre-usuario {
+    flex: 1 1 100%;
+}
+
+#mensaje-input {
+    flex: 1;
+    min-width: 140px;
+}
+
+#entrada-chat button {
+    background: #ffffff;
+    color: #000000;
+    border: none;
+    font-weight: 600;
+    padding: 10px 24px;
+    cursor: pointer;
+    transition: background 0.2s, transform 0.1s;
+}
+
+#entrada-chat button:hover {
+    background: #e0e0e0;
+}
+
+#entrada-chat button:active {
+    transform: scale(0.96);
+}
+
+/* ===== FOOTER ===== */
+footer {
+    margin-top: 32px;
+    text-align: center;
+    font-size: 0.65rem;
+    color: #555;
+    border-top: 1px solid var(--border-light);
+    padding-top: 16px;
+    letter-spacing: 0.5px;
+}
+
+/* ===== SCROLLBAR ===== */
+#mensajes::-webkit-scrollbar {
+    width: 4px;
+}
+#mensajes::-webkit-scrollbar-track {
+    background: transparent;
+}
+#mensajes::-webkit-scrollbar-thumb {
+    background: #444;
+    border-radius: 10px;
+}
+/* ===== CARRUSEL / SLIDER ===== */
+#iglesia {
+    background: var(--bg-card);
+    border-radius: 24px;
+    padding: 18px 16px 16px;
+    margin-bottom: 28px;
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    text-align: center;
+}
+
+#iglesia h2 {
+    font-family: var(--fuente-titulos);
+    font-weight: 400;
+    font-size: 1.1rem;
+    letter-spacing: 2px;
+    color: var(--text-secondary);
+    margin-bottom: 12px;
+}
+
+.carousel-container {
+    position: relative;
+    width: 100%;
+    border-radius: 16px;
+    overflow: hidden;
+    margin-bottom: 12px;
+    background: #111;
+    aspect-ratio: 16 / 9; /* Relación de aspecto fija para que no baile */
+}
+
+.carousel-track {
+    display: flex;
+    transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    height: 100%;
+    will-change: transform;
+}
+
+.carousel-slide {
+    min-width: 100%;
+    height: 100%;
+}
+
+.carousel-slide img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    user-select: none;
+    -webkit-user-drag: none;
+}
+
+/* Flechas de navegación */
+.carousel-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(4px);
+    color: #fff;
+    border: none;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    font-size: 1.6rem;
+    line-height: 1;
+    cursor: pointer;
+    transition: background 0.2s, opacity 0.2s;
+    z-index: 10;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    opacity: 0.7;
+}
+
+.carousel-btn:hover {
+    background: rgba(255, 255, 255, 0.2);
+    opacity: 1;
+}
+
+.carousel-btn:active {
+    transform: translateY(-50%) scale(0.92);
+}
+
+.carousel-btn.prev {
+    left: 8px;
+}
+
+.carousel-btn.next {
+    right: 8px;
+}
+
+/* Indicadores (puntos) */
+.carousel-indicators {
+    position: absolute;
+    bottom: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 8px;
+    z-index: 10;
+}
+
+.carousel-indicators .dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.3);
+    transition: background 0.3s, transform 0.3s;
+    cursor: pointer;
+}
+
+.carousel-indicators .dot.active {
+    background: #ffffff;
+    transform: scale(1.3);
+}
+
+/* Texto debajo del carrusel */
+.iglesia-desc {
+    font-size: 0.9rem;
+    color: var(--text-primary);
+    font-weight: 400;
+    margin-top: 4px;
+}
+
+#iglesia .anexo {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    font-weight: 300;
+    margin-top: 2px;
+}
+
+/* Ocultar flechas en móviles muy pequeños (opcional) */
+@media (max-width: 400px) {
+    .carousel-btn {
+        width: 28px;
+        height: 28px;
+        font-size: 1.2rem;
+    }
+    .carousel-btn.prev {
+        left: 4px;
+    }
+    .carousel-btn.next {
+        right: 4px;
+    }
+}
+/* ===== BOTÓN FLOTANTE DE WHATSAPP ===== */
+#whatsapp-float {
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    width: 60px;
+    height: 60px;
+    background: #25D366;
+    border-radius: 50%;
+    box-shadow: 0 4px 20px rgba(37, 211, 102, 0.4);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    transition: transform 0.2s, box-shadow 0.2s;
+    text-decoration: none;
+    animation: pulse-whatsapp 2s infinite;
+}
+
+#whatsapp-float:hover {
+    transform: scale(1.08);
+    box-shadow: 0 6px 30px rgba(37, 211, 102, 0.6);
+}
+
+#whatsapp-float:active {
+    transform: scale(0.95);
+}
+
+#whatsapp-float svg {
+    width: 32px;
+    height: 32px;
+    fill: white;
+}
+
+@keyframes pulse-whatsapp {
+    0% { box-shadow: 0 4px 20px rgba(37, 211, 102, 0.4); }
+    50% { box-shadow: 0 4px 40px rgba(37, 211, 102, 0.7); }
+    100% { box-shadow: 0 4px 20px rgba(37, 211, 102, 0.4); }
+}
+
+/* Ajuste para móviles pequeños */
+@media (max-width: 400px) {
+    #whatsapp-float {
+        width: 52px;
+        height: 52px;
+        bottom: 16px;
+        right: 16px;
+    }
+    #whatsapp-float svg {
+        width: 28px;
+        height: 28px;
+    }
+}
+/* ===== SECCIÓN HORARIOS ===== */
+#horarios {
+    background: var(--bg-card);
+    border-radius: 24px;
+    padding: 18px 20px 20px;
+    margin-bottom: 28px;
+    border: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+#horarios h2 {
+    font-family: var(--fuente-titulos);
+    font-weight: 400;
+    font-size: 1.2rem;
+    letter-spacing: 1px;
+    color: var(--text-secondary);
+    margin-bottom: 16px;
+    text-align: center;
+}
+
+/* ===== BOTÓN DE YOUTUBE ===== */
+.youtube-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    background: #FF0000;
+    color: white;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 1rem;
+    padding: 12px 20px;
+    border-radius: 30px;
+    margin-bottom: 18px;
+    transition: transform 0.2s, box-shadow 0.2s;
+    box-shadow: 0 4px 12px rgba(255, 0, 0, 0.3);
+    font-family: var(--fuente-textos);
+}
+
+.youtube-btn:hover {
+    transform: scale(1.02);
+    box-shadow: 0 6px 20px rgba(255, 0, 0, 0.5);
+}
+
+.youtube-btn:active {
+    transform: scale(0.96);
+}
+
+.youtube-btn svg {
+    width: 24px;
+    height: 24px;
+    fill: white;
+    flex-shrink: 0;
+}
+
+/* ===== ACORDEÓN ===== */
+.acordeon {
+    border-radius: 16px;
+    overflow: hidden;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.acordeon-header {
+    width: 100%;
+    background: rgba(255, 255, 255, 0.03);
+    color: var(--text-primary);
+    border: none;
+    padding: 14px 18px;
+    font-size: 0.95rem;
+    font-weight: 500;
+    font-family: var(--fuente-textos);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+    transition: background 0.2s;
+    letter-spacing: 0.3px;
+}
+
+.acordeon-header:hover {
+    background: rgba(255, 255, 255, 0.06);
+}
+
+.acordeon-icon {
+    font-size: 0.8rem;
+    transition: transform 0.3s ease;
+}
+
+.acordeon.open .acordeon-icon {
+    transform: rotate(180deg);
+}
+
+.acordeon-content {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    background: rgba(255, 255, 255, 0.02);
+}
+
+.acordeon.open .acordeon-content {
+    max-height: 600px; /* suficiente para todos los horarios */
+}
+
+.horarios-lista {
+    list-style: none;
+    padding: 6px 18px 18px;
+    margin: 0;
+}
+
+.horarios-lista li {
+    display: flex;
+    align-items: baseline;
+    gap: 8px;
+    padding: 8px 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+}
+
+.horarios-lista li:last-child {
+    border-bottom: none;
+}
+
+.horarios-lista .dia {
+    font-weight: 600;
+    color: var(--text-primary);
+    min-width: 80px;
+}
+
+.horarios-lista .hora {
+    color: var(--text-muted);
+    font-weight: 300;
+    min-width: 70px;
+}
+
+.horarios-lista .actividad {
+    color: var(--text-secondary);
+    font-weight: 300;
+    margin-left: auto;
+    text-align: right;
+}
+
+/* Ajuste para móviles pequeños */
+@media (max-width: 400px) {
+    .horarios-lista li {
+        flex-wrap: wrap;
+        gap: 2px;
+    }
+    .horarios-lista .dia {
+        min-width: 60px;
+    }
+    .horarios-lista .hora {
+        min-width: 55px;
+    }
+    .horarios-lista .actividad {
+        text-align: left;
+        width: 100%;
+        margin-left: 0;
+        padding-left: 60px;
+    }
+}
+
+/* ===== CONTENEDOR DE BOTONES EN EL ENCABEZADO ===== */
+.botones-container {
+    display: flex;
+    flex-direction: column;  /* ← Esto coloca los botones uno debajo del otro */
+    align-items: center;     /* ← Centra horizontalmente */
+    gap: 10px;               /* ← Espacio entre botones */
+    margin-top: 12px;
+    width: 100%;
+    justify-content: center;
+}
+
+/* Ajuste para el botón de instalación dentro del contenedor */
+.botones-container button {
+    flex: 1;                 /* ← Ocupan el mismo espacio */
+    min-width: 0;            /* ← Permite que se reduzcan si es necesario */
+    white-space: nowrap;     /* ← Evita que el texto se divida en varias líneas */
+    padding: 10px 8px;       /* ← Ajuste fino */
+    font-size: 0.85rem;      /* ← Tamaño más compacto */
+}
+
+/* Ajuste específico para el botón de YouTube (siempre debajo) */
+.youtube-btn-header {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    background: #FF0000;
+    color: white;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.9rem;
+    padding: 10px 20px;
+    border-radius: 30px;
+    box-shadow: 0 4px 12px rgba(255, 0, 0, 0.3);
+    font-family: var(--fuente-textos);
+    transition: transform 0.2s, box-shadow 0.2s;
+    width: fit-content;
+    margin: 8px auto 0;
+}
+
+.youtube-btn-header:hover {
+    transform: scale(1.02);
+    box-shadow: 0 6px 20px rgba(255, 0, 0, 0.5);
+}
+
+.youtube-btn-header:active {
+    transform: scale(0.96);
+}
+
+.youtube-btn-header svg {
+    width: 20px;
+    height: 20px;
+    fill: white;
+    flex-shrink: 0;
+}
+/* ===== SECCIÓN UBICACIÓN ===== */
+#ubicacion {
+    background: var(--bg-card);
+    border-radius: 24px;
+    padding: 18px 20px 20px;
+    margin-bottom: 28px;
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    text-align: center;
+}
+
+#ubicacion h2 {
+    font-family: var(--fuente-titulos);
+    font-weight: 400;
+    font-size: 1.2rem;
+    letter-spacing: 1px;
+    color: var(--text-secondary);
+    margin-bottom: 14px;
+}
+
+/* ===== BOTÓN DE UBICACIÓN ===== */
+.ubicacion-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    background: #4285F4; /* Color de Google Maps */
+    color: white;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 1rem;
+    padding: 12px 24px;
+    border-radius: 30px;
+    box-shadow: 0 4px 12px rgba(66, 133, 244, 0.3);
+    transition: transform 0.2s, box-shadow 0.2s;
+    font-family: var(--fuente-textos);
+    width: fit-content;
+    margin: 0 auto;
+}
+
+.ubicacion-btn:hover {
+    transform: scale(1.02);
+    box-shadow: 0 6px 20px rgba(66, 133, 244, 0.5);
+}
+
+.ubicacion-btn:active {
+    transform: scale(0.96);
+}
+
+.ubicacion-btn svg {
+    width: 24px;
+    height: 24px;
+    fill: white;
+    flex-shrink: 0;
+}
+
+/* ===== DIRECCIÓN ===== */
+.direccion {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    margin-top: 10px;
+    font-weight: 300;
+    letter-spacing: 0.3px;
+}
+/* ===== CONTENEDOR DE UBICACIÓN ===== */
+.ubicacion-container {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    align-items: center;
+}
+
+.ubicacion-btn-bahia {
+    background: #34A853; /* Un verde diferente para distinguir */
+}
+
+.ubicacion-btn-bahia:hover {
+    box-shadow: 0 6px 20px rgba(52, 168, 83, 0.5);
+}
+/* ===== SECCIÓN EVENTOS ===== */
+#eventos {
+    background: var(--bg-card);
+    border-radius: 24px;
+    padding: 18px 20px 20px;
+    margin-bottom: 28px;
+    border: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+#eventos h2 {
+    font-family: var(--fuente-titulos);
+    font-weight: 400;
+    font-size: 1.2rem;
+    letter-spacing: 1px;
+    color: var(--text-secondary);
+    margin-bottom: 16px;
+    text-align: center;
+}
+
+.eventos-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.tarjeta-evento {
+    background: rgba(255, 255, 255, 0.03);
+    border-radius: 16px;
+    overflow: hidden;
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.tarjeta-evento:hover {
+    transform: scale(1.01);
+    box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+}
+
+.tarjeta-evento img {
+    width: 100%;
+    height: auto;
+    max-height: 200px;
+    object-fit: cover;
+    display: block;
+}
+
+.tarjeta-evento .info {
+    padding: 14px 16px 16px;
+}
+
+.tarjeta-evento .info h3 {
+    font-family: var(--fuente-titulos);
+    font-weight: 700;
+    font-size: 1.1rem;
+    color: #ffffff;
+    margin-bottom: 4px;
+}
+
+.tarjeta-evento .info .fecha {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    margin-bottom: 6px;
+}
+
+.tarjeta-evento .info .descripcion {
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+    line-height: 1.4;
+}
+
+.sin-eventos {
+    text-align: center;
+    color: var(--text-muted);
+    font-size: 0.95rem;
+    padding: 20px 0;
+}
+
+.cargando {
+    text-align: center;
+    color: var(--text-muted);
+    font-size: 0.9rem;
+    padding: 10px 0;
+}
+/* ===== LIGHTBOX ===== */
+#lightbox {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.92);
+    z-index: 9999;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    backdrop-filter: blur(4px);
+    animation: fadeIn 0.3s ease;
+}
+
+#lightbox img {
+    max-width: 95%;
+    max-height: 95%;
+    object-fit: contain;
+    border-radius: 12px;
+    box-shadow: 0 0 60px rgba(255, 255, 255, 0.08);
+    animation: zoomIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes zoomIn {
+    from { transform: scale(0.9); }
+    to { transform: scale(1); }
+}
+/* ===== MENÚ HAMBURGUESA ===== */
+.menu-toggle {
+    position: absolute;
+    top: 20px;
+    left: 16px;
+    width: 30px;
+    height: 24px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    cursor: pointer;
+    z-index: 10;
+}
+
+.menu-toggle span {
+    display: block;
+    height: 3px;
+    width: 100%;
+    background: #ffffff;
+    border-radius: 3px;
+    transition: all 0.3s ease;
+}
+
+/* Animación del botón cuando el menú está abierto (opcional) */
+.menu-toggle.active span:nth-child(1) {
+    transform: translateY(10px) rotate(45deg);
+}
+.menu-toggle.active span:nth-child(2) {
+    opacity: 0;
+}
+.menu-toggle.active span:nth-child(3) {
+    transform: translateY(-10px) rotate(-45deg);
+}
+
+/* ===== DRAWER (MENÚ LATERAL) ===== */
+#drawer {
+    position: fixed;
+    top: 0;
+    left: -280px;
+    width: 280px;
+    height: 100%;
+    background: var(--bg-card);
+    border-right: 1px solid rgba(255,255,255,0.06);
+    z-index: 1000;
+    transition: left 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    padding: 20px 16px;
+    box-shadow: 2px 0 20px rgba(0,0,0,0.5);
+}
+
+#drawer.open {
+    left: 0;
+}
+
+.drawer-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 24px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--border-light);
+}
+
+.drawer-header h3 {
+    font-family: var(--fuente-titulos);
+    font-weight: 400;
+    color: var(--text-primary);
+    font-size: 1.2rem;
+    margin: 0;
+}
+
+#closeDrawer {
+    background: none;
+    border: none;
+    color: var(--text-muted);
+    font-size: 1.5rem;
+    cursor: pointer;
+    padding: 4px 8px;
+    transition: color 0.2s;
+}
+
+#closeDrawer:hover {
+    color: #ffffff;
+}
+
+.drawer-menu {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.drawer-menu li {
+    margin-bottom: 8px;
+}
+
+.drawer-menu a {
+    display: block;
+    padding: 12px 16px;
+    border-radius: 12px;
+    color: var(--text-secondary);
+    text-decoration: none;
+    font-size: 1rem;
+    transition: background 0.2s, color 0.2s;
+    font-family: var(--fuente-textos);
+}
+
+.drawer-menu a:hover {
+    background: rgba(255,255,255,0.06);
+    color: #ffffff;
+}
+
+.drawer-menu a:active {
+    background: rgba(255,255,255,0.1);
+}
+
+/* ===== OVERLAY ===== */
+#drawerOverlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.5);
+    z-index: 999;
+    display: none;
+}
+
+#drawerOverlay.active {
+    display: block;
+}
+
+/* ===== MODAL PARA FORMULARIO Y COLABORACIÓN ===== */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.8);
+    z-index: 2000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+}
+
+.modal {
+    background: var(--bg-card);
+    border-radius: 24px;
+    max-width: 480px;
+    width: 100%;
+    padding: 24px 20px;
+    border: 1px solid rgba(255,255,255,0.06);
+    max-height: 90vh;
+    overflow-y: auto;
+    position: relative;
+}
+
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 18px;
+}
+
+.modal-header h2 {
+    font-family: var(--fuente-titulos);
+    font-weight: 400;
+    color: var(--text-primary);
+    margin: 0;
+    font-size: 1.3rem;
+}
+
+.modal-close {
+    background: none;
+    border: none;
+    color: var(--text-muted);
+    font-size: 1.8rem;
+    cursor: pointer;
+    padding: 0 8px;
+    transition: color 0.2s;
+}
+
+.modal-close:hover {
+    color: #ffffff;
+}
+
+/* Formulario de sugerencias */
+.form-group {
+    margin-bottom: 16px;
+}
+
+.form-group label {
+    display: block;
+    font-size: 0.85rem;
+    font-weight: 500;
+    color: var(--text-secondary);
+    margin-bottom: 4px;
+}
+
+.form-group input,
+.form-group textarea {
+    width: 100%;
+    padding: 10px 14px;
+    border-radius: 12px;
+    border: 1px solid var(--border-light);
+    background: rgba(255,255,255,0.03);
+    color: var(--text-primary);
+    font-size: 0.95rem;
+    font-family: var(--fuente-textos);
+    transition: border 0.2s;
+}
+
+.form-group input:focus,
+.form-group textarea:focus {
+    outline: none;
+    border-color: #ffffff;
+}
+
+.form-group textarea {
+    resize: vertical;
+    min-height: 100px;
+}
+
+.btn-enviar {
+    width: 100%;
+    padding: 12px;
+    border: none;
+    border-radius: 30px;
+    background: #25D366;
+    color: white;
+    font-weight: 600;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background 0.2s;
+    font-family: var(--fuente-textos);
+}
+
+.btn-enviar:hover {
+    background: #1da851;
+}
+
+.btn-enviar:active {
+    transform: scale(0.98);
+}
+
+/* Contenido de colaboración */
+.cbu-info {
+    background: rgba(255,255,255,0.03);
+    padding: 16px;
+    border-radius: 12px;
+    border: 1px solid var(--border-light);
+    margin: 12px 0;
+}
+
+.cbu-info p {
+    margin: 6px 0;
+    color: var(--text-secondary);
+}
+
+.cbu-info strong {
+    color: var(--text-primary);
+}
+
+.btn-copiar {
+    background: rgba(255,255,255,0.06);
+    border: 1px solid var(--border-light);
+    color: var(--text-secondary);
+    padding: 8px 16px;
+    border-radius: 30px;
+    font-size: 0.85rem;
+    cursor: pointer;
+    transition: background 0.2s;
+    font-family: var(--fuente-textos);
+    margin-top: 8px;
+}
+
+.btn-copiar:hover {
+    background: rgba(255,255,255,0.1);
+    color: #ffffff;
+}

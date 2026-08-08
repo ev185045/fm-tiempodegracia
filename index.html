@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Tiempo de Gracia Live</title>
+    <!-- Google Fonts: Playfair Display + Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Inter:opsz,wght@14..32,300;14..32,400;14..32,600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#0a0a0a">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+</head>
+<body>
+
+    <div id="app">
+
+        <!-- ====== ENCABEZADO ====== -->
+        <header class="hero">
+            <!-- Dentro del <header class="hero">, al inicio -->
+<div class="menu-toggle" id="menuToggle">
+    <span></span>
+    <span></span>
+    <span></span>
+</div>
+            <div class="logo-container">
+                <img src="logo.png" alt="Logo" id="logo">
+            </div>
+            <h1>Tiempo de Gracia</h1>
+            <p class="subtitulo">-Radio Online-</p>
+            <p class="iglesia">Iglesia Evangélica Pentecostal Cristo el Rey</p>
+
+            <!-- CONTENEDOR DE BOTONES (fila) -->
+            <div class="botones-container">
+                <!-- Botón de descarga APK -->
+                <button id="installBtn" 
+                    style="display: inline-block; background: #2f810e; color: white; border: none; padding: 10px 18px; border-radius: 30px; font-weight: 600; font-size: 0.9rem; cursor: pointer; box-shadow: 0 4px 12px rgba(255, 107, 53, 0.3); transition: transform 0.2s; flex: 1; min-width: 0;"
+                    data-download-url="https://drive.google.com/uc?export=download&id=17NYf5O0EJj97x40FVPHToHpHCbq1XpTZ">
+                    📥 APK
+                </button>
+
+                <!-- Botón de compartir -->
+                <button id="shareBtn" 
+                    style="display: inline-block; background: #1DA1F2; color: white; border: none; padding: 10px 18px; border-radius: 30px; font-weight: 600; font-size: 0.9rem; cursor: pointer; box-shadow: 0 4px 12px rgba(29, 161, 242, 0.3); transition: transform 0.2s; flex: 1; min-width: 0;">
+                    🔗 Compartir app
+                </button>
+            </div>
+
+            <!-- Botón de YouTube (debajo) -->
+            <a href="https://www.youtube.com/@cristoelreypuntaalta" target="_blank" rel="noopener noreferrer" class="youtube-btn-header">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="white" width="24" height="24">
+                    <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
+                </svg>
+                Canal de YouTube
+            </a>
+        </header>
+
+        <!-- Menú lateral (drawer) -->
+<div id="drawer">
+    <div class="drawer-header">
+        <h3>Menú</h3>
+        <button id="closeDrawer">✕</button>
+    </div>
+    <ul class="drawer-menu">
+        <li><a href="#" id="menuSugerencias">📝 Sugerencias y reporte de fallas</a></li>
+        <li><a href="#" id="menuColaborar">❤️ Quiero colaborar con la radio</a></li>
+    </ul>
+</div>
+
+<!-- Overlay para cerrar el menú al hacer clic fuera -->
+<div id="drawerOverlay"></div>
+
+        <!-- ====== REPRODUCTOR ====== -->
+        <section id="player">
+            <div class="player-card">
+                <div class="estado">
+                    <span id="estado-texto">Cargando...</span>
+                    <span id="cancion-actual">—</span>
+                </div>
+                <button id="play-btn" aria-label="Reproducir">
+                    <span id="play-icon">▶</span>
+                </button>
+                <p class="player-label">RADIO TIEMPO DE GRACIA</p>
+                <p class="player-sub">Toca para escuchar</p>
+            </div>
+        </section>
+
+        <!-- ====== CHAT EN VIVO ====== -->
+        <section id="chat">
+            <h2>Chat en vivo 🔴 <span id="contador-conectados">0</span></h2>
+            <div id="mensajes"></div>
+            <div id="entrada-chat">
+                <input type="text" id="nombre-usuario" placeholder="Tu nombre" maxlength="20">
+                <input type="text" id="mensaje-input" placeholder="Escribe un mensaje...">
+                <button id="enviar-btn">Enviar</button>
+            </div>
+        </section>
+
+        <!-- ====== EVENTOS PRÓXIMOS ====== -->
+        <section id="eventos">
+            <h2>📅 Próximos Eventos</h2>
+            <div id="eventos-container">
+                <p class="cargando">Cargando eventos...</p>
+            </div>
+        </section>
+
+        <!-- ====== HORARIOS ====== -->
+        <section id="horarios">
+            <h2>DIAS Y HORARIOS DE REUNION</h2>
+            
+            <!-- Templo Punta Alta -->
+            <div class="acordeon">
+                <button class="acordeon-header" data-target="puntaalta">
+                    <span>📍 Punta Alta</span>
+                    <span class="acordeon-icon">▼</span>
+                </button>
+                <div class="acordeon-content" id="content-puntaalta">
+                    <ul class="horarios-lista">
+                        <li><span class="dia">Martes</span> <span class="hora">19:30hs</span> <span class="actividad">Oración</span></li>
+                        <li><span class="dia">Jueves</span> <span class="hora">19:30hs</span> <span class="actividad">Culto de agradecimiento y testimonio</span></li>
+                        <li><span class="dia">Sábado</span> <span class="hora">16:30hs</span> <span class="actividad">Escuela Bíblica</span></li>
+                        <li><span class="dia">Sábado</span> <span class="hora">18:00hs</span> <span class="actividad">Reunión pre-adolescentes</span></li>
+                        <li><span class="dia">Sábado</span> <span class="hora">19:30hs</span> <span class="actividad">Culto general</span></li>
+                        <li><span class="dia">Domingo</span> <span class="hora">9:30hs</span> <span class="actividad">Culto general</span></li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Templo Bahía Blanca -->
+            <div class="acordeon">
+                <button class="acordeon-header" data-target="bahiablanca">
+                    <span>📍 Bahía Blanca</span>
+                    <span class="acordeon-icon">▼</span>
+                </button>
+                <div class="acordeon-content" id="content-bahiablanca">
+                    <ul class="horarios-lista">
+                        <li><span class="dia">Martes</span> <span class="hora">19:30hs</span> <span class="actividad">Oración y Estudio Bíblico</span></li>
+                        <li><span class="dia">Jueves</span> <span class="hora">19:30hs</span> <span class="actividad">Culto de testimonio y agradecimiento</span></li>
+                        <li><span class="dia">Sábado</span> <span class="hora">19:30hs</span> <span class="actividad">Culto general</span></li>
+                        <li><span class="dia">Domingo</span> <span class="hora">06:00hs</span> <span class="actividad">Oración</span></li>
+                        <li><span class="dia">Domingo</span> <span class="hora">18:00hs</span> <span class="actividad">Culto general</span></li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- ====== UBICACIÓN ====== -->
+        <section id="ubicacion">
+            <h2>📍 Ubicación de los Templos</h2>
+            <div class="ubicacion-container">
+                <a href="https://maps.app.goo.gl/fPrbS6bk2xMKotoPA" target="_blank" rel="noopener noreferrer" class="ubicacion-btn">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="white" width="24" height="24">
+                        <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
+                    </svg>
+                    Punta Alta
+                </a>
+                <a href="https://maps.app.goo.gl/drBxeib5L2uqbmxHA" target="_blank" rel="noopener noreferrer" class="ubicacion-btn ubicacion-btn-bahia">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="white" width="24" height="24">
+                        <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
+                    </svg>
+                    Bahía Blanca
+                </a>
+            </div>
+            <p class="direccion">Iglesia Evangélica Pentecostal Cristo el Rey</p>
+        </section>
+
+        <!-- ====== PIE DE PÁGINA ====== -->
+        <footer>
+            <p>© 2025 Tiempo de Gracia - Todos los derechos reservados</p>
+            <p>© version de app (v4.5) si lees esto Dios te bendiga</p>
+        </footer>
+
+    </div> <!-- Cierre #app -->
+
+    <!-- ====== BOTÓN FLOTANTE WHATSAPP ====== -->
+    <a href="https://wa.me/5492914617824?text=Paz%20del%20Se%C3%B1or%2C%20estoy%20escuchando%20Tiempo%20de%20Gracia%21" 
+       target="_blank" 
+       rel="noopener noreferrer" 
+       id="whatsapp-float"
+       aria-label="Contactar por WhatsApp">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="white">
+            <path d="M12.032 21.965c-2.007 0-3.944-.547-5.594-1.574l-4.247 1.425 1.518-4.124c-1.108-1.723-1.754-3.721-1.754-5.862 0-5.967 4.852-10.83 10.819-10.83 5.967 0 10.83 4.863 10.83 10.83 0 5.967-4.863 10.819-10.83 10.819zm6.733-6.078c.134-.467.134-.867.067-1.2-.067-.333-.333-.6-.8-.867-.467-.267-1.534-.8-1.667-.867-.133-.067-.267-.067-.4.067-.133.133-.467.6-.6.8-.133.2-.267.2-.467.133-.2-.067-.8-.3-1.534-.933-.6-.533-.967-1.2-1.067-1.4-.133-.2-.013-.333.067-.4.067-.067.2-.2.267-.267.067-.067.133-.133.133-.267s-.067-.267-.133-.4c-.067-.133-.467-1.134-.667-1.534-.2-.4-.4-.333-.533-.333-.133 0-.267-.067-.4-.067-.133 0-.333.067-.533.333-.2.267-.8.8-.8 1.934s.867 2.267 1.067 2.4c.2.133 1.734 2.667 4.2 3.734.6.267 1.067.4 1.4.534.6.2 1.134.2 1.534.133.467-.067 1.4-.6 1.6-1.134.2-.533.2-.933.133-1.067-.067-.133-.2-.2-.4-.267-.133-.067-.4-.2-.6-.267z"/>
+        </svg>
+    </a>
+
+    <!-- ====== LIGHTBOX ====== -->
+    <div id="lightbox" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); z-index: 9999; align-items: center; justify-content: center; cursor: pointer;">
+        <img id="lightbox-img" src="" alt="Flyer" style="max-width: 95%; max-height: 95%; object-fit: contain; border-radius: 8px; box-shadow: 0 0 40px rgba(255,255,255,0.1);">
+    </div>
+
+    <!-- ====== FIREBASE Y SCRIPTS ====== -->
+    <script type="importmap">
+    {
+        "imports": {
+            "firebase/app": "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js",
+            "firebase/database": "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js",
+            "firebase/messaging": "https://www.gstatic.com/firebasejs/10.7.1/firebase-messaging.js"
+        }
+    }
+</script>
+    <script type="module" src="app.js"></script>
+
+    <script>
+    if ('serviceWorker' in navigator) {
+        // Registrar el Service Worker principal
+        navigator.serviceWorker.register('./sw.js')
+            .then(reg => console.log('✅ Service Worker registrado:', reg))
+            .catch(err => console.error('❌ Error al registrar SW:', err));
+
+        // Registrar el Service Worker de FCM (para notificaciones push)
+        navigator.serviceWorker.register('./firebase-messaging-sw.js')
+            .then(reg => console.log('✅ FCM Service Worker registrado:', reg))
+            .catch(err => console.error('❌ Error al registrar FCM SW:', err));
+    } else {
+        console.warn('⚠️ Service Workers no soportados.');
+    }
+</script>
+
+</body>
+</html>
