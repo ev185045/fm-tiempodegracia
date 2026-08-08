@@ -1,5 +1,5 @@
 // sw.js
-const CACHE_VERSION = 'v5.0-cloudflare'; // <--- CAMBIA ESTE NÚMERO CADA VEZ QUE HAGAS UN CAMBIO IMPORTANTE
+const CACHE_VERSION = 'v5.1-cloudflare'; // <--- CAMBIA ESTE NÚMERO CADA VEZ QUE HAGAS UN CAMBIO IMPORTANTE
 const CACHE_NAME = `radio-cache-${CACHE_VERSION}`;
 
 // Archivos a cachear (asegúrate de que esta lista esté completa)
