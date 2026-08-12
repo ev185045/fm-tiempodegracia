@@ -34,39 +34,196 @@ document.addEventListener('DOMContentLoaded', function () {
     // Verificar elementos críticos
     console.log('🔍 Elementos del DOM:', { playBtn, estadoTexto, mensajesDiv, nombreInput, mensajeInput, enviarBtn });
 
-    // -------------------- REPRODUCTOR DE RADIO --------------------
-    const STREAM_URL = 'http://streaming6.locucionar.com:24340/stream'; // REEMPLAZA CUANDO TENGAS LA CORRECTA
-    let audio = new Audio(STREAM_URL);
+        // -------------------- REPRODUCTOR DE RADIO --------------------
+    const STREAM_URL = 'http://streaming6.locucionar.com:24340/stream';
+    let audio = null;
     let isPlaying = false;
+    let pausaManual = false;        // Bandera para saber si la pausa fue manual (usuario)
+    let bufferTimeout = null;       // Timeout para detectar buffering largo
 
+    // Función para crear una nueva instancia de Audio (reinicia el stream)
+    function crearAudio() {
+        if (audio) {
+            audio.pause();
+            audio.src = '';
+            audio = null;
+        }
+        audio = new Audio(STREAM_URL);
+        audio.preload = 'auto';      // Precarga para mejor rendimiento
+        return audio;
+    }
+
+    // Función para reiniciar el stream (forzar recarga)
+    function reiniciarStream() {
+        console.log('🔄 Reiniciando stream para tiempo real...');
+        const estabaSonando = isPlaying;
+        if (audio) {
+            audio.pause();
+            audio.src = '';
+        }
+        crearAudio();
+        // Si estaba sonando, intentamos reproducir de nuevo
+        if (estabaSonando) {
+            audio.play().catch(err => console.warn('⚠️ Error al reanudar tras reinicio:', err));
+        }
+    }
+
+    // Inicializar audio
     if (playBtn && estadoTexto) {
-        audio.addEventListener('loadstart', () => { estadoTexto.textContent = 'Conectando...'; });
-        audio.addEventListener('canplay', () => { estadoTexto.textContent = 'Listo'; });
+        crearAudio();
+
+        // ---- Eventos de reproducción ----
+        audio.addEventListener('loadstart', () => {
+            estadoTexto.textContent = 'Conectando...';
+        });
+
+        audio.addEventListener('canplay', () => {
+            estadoTexto.textContent = 'Listo';
+        });
+
         audio.addEventListener('playing', () => {
             estadoTexto.textContent = 'En vivo';
             playBtn.textContent = '⏸';
             isPlaying = true;
+            pausaManual = false;   // Si se reanuda exitosamente, limpiar bandera
+            if (bufferTimeout) {
+                clearTimeout(bufferTimeout);
+                bufferTimeout = null;
+            }
         });
+
         audio.addEventListener('pause', () => {
-            estadoTexto.textContent = 'Pausado';
-            playBtn.textContent = '▶';
-            isPlaying = false;
+            // Solo actualizamos estado si no fue por error o reinicio
+            if (audio && !audio.error) {
+                estadoTexto.textContent = 'Pausado';
+                playBtn.textContent = '▶';
+                isPlaying = false;
+            }
         });
-        audio.addEventListener('error', () => {
+
+        // ---- Eventos de error / interrupción ----
+        audio.addEventListener('error', (e) => {
+            console.warn('⚠️ Error en el reproductor:', e);
             estadoTexto.textContent = 'Error de conexión';
             playBtn.textContent = '▶';
             isPlaying = false;
+            pausaManual = false;   // El error no es manual
+            // Reintentar automáticamente tras 2 segundos
+            setTimeout(() => {
+                if (!isPlaying && !pausaManual) {
+                    console.log('🔄 Reintentando conexión...');
+                    reiniciarStream();
+                    if (playBtn) playBtn.textContent = '⏸';
+                    audio.play().catch(() => {});
+                }
+            }, 2000);
         });
 
-        playBtn.addEventListener('click', () => {
-            if (isPlaying) {
-                audio.pause();
-            } else {
-                audio.play().catch(() => {
-                    estadoTexto.textContent = 'Error al reproducir';
-                });
+        // Evento 'stalled' (se detuvo por falta de datos)
+        audio.addEventListener('stalled', () => {
+            console.warn('⚠️ Reproductor detenido (stalled)');
+            if (!pausaManual && isPlaying) {
+                estadoTexto.textContent = 'Reconectando...';
+                // Si se queda stalled por más de 5 segundos, reiniciamos
+                if (bufferTimeout) clearTimeout(bufferTimeout);
+                bufferTimeout = setTimeout(() => {
+                    console.log('🔄 Reiniciando por stalled prolongado');
+                    reiniciarStream();
+                    if (playBtn) playBtn.textContent = '⏸';
+                    audio.play().catch(() => {});
+                }, 5000);
             }
         });
+
+        // Evento 'waiting' (buffering)
+        audio.addEventListener('waiting', () => {
+            if (!pausaManual && isPlaying) {
+                estadoTexto.textContent = 'Cargando...';
+                if (bufferTimeout) clearTimeout(bufferTimeout);
+                bufferTimeout = setTimeout(() => {
+                    console.log('🔄 Reiniciando por buffering largo');
+                    reiniciarStream();
+                    if (playBtn) playBtn.textContent = '⏸';
+                    audio.play().catch(() => {});
+                }, 10000);
+            }
+        });
+
+        // Evento 'abort' (cuando se interrumpe la carga)
+        audio.addEventListener('abort', () => {
+            console.warn('⚠️ Carga abortada');
+            if (!pausaManual) {
+                // Si no fue manual, reiniciamos
+                setTimeout(() => {
+                    if (!isPlaying && !pausaManual) {
+                        reiniciarStream();
+                    }
+                }, 1000);
+            }
+        });
+
+        // ---- Control manual ----
+        playBtn.addEventListener('click', () => {
+            if (isPlaying) {
+                // Pausa manual
+                pausaManual = true;
+                audio.pause();
+                estadoTexto.textContent = 'Pausado';
+                playBtn.textContent = '▶';
+                isPlaying = false;
+                if (bufferTimeout) {
+                    clearTimeout(bufferTimeout);
+                    bufferTimeout = null;
+                }
+            } else {
+                // Reanudar: si la pausa fue automática (pausaManual false) o hubo error, reiniciamos stream
+                if (!pausaManual && audio && audio.error) {
+                    console.log('🔄 Reanudando con reinicio de stream (error previo)');
+                    reiniciarStream();
+                } else if (!pausaManual && audio && (audio.currentTime > 0 || audio.readyState < 2)) {
+                    // Si estaba pausado automáticamente y no está listo, reiniciamos
+                    console.log('🔄 Reanudando con reinicio de stream (no listo)');
+                    reiniciarStream();
+                }
+                // Si la pausa fue manual, simplemente reanudamos
+                if (audio) {
+                    audio.play().catch(() => {
+                        // Si falla al reproducir, reiniciamos
+                        reiniciarStream();
+                        audio.play().catch(() => {});
+                    });
+                } else {
+                    crearAudio();
+                    audio.play().catch(() => {});
+                }
+                // Reseteamos bandera de pausa manual al intentar reproducir
+                pausaManual = false;
+                estadoTexto.textContent = 'Conectando...';
+                playBtn.textContent = '⏸';
+                isPlaying = true;
+            }
+        });
+
+        // ---- Detección de cambios de red ----
+        window.addEventListener('online', () => {
+            console.log('📶 Conexión restablecida');
+            if (!isPlaying && !pausaManual) {
+                // Si estaba pausado automáticamente, reiniciamos
+                reiniciarStream();
+                audio.play().catch(() => {});
+                playBtn.textContent = '⏸';
+                isPlaying = true;
+                estadoTexto.textContent = 'Reconectando...';
+            }
+        });
+
+        window.addEventListener('offline', () => {
+            console.log('📶 Conexión perdida');
+            estadoTexto.textContent = 'Sin conexión';
+            // No detenemos el audio, pero marcamos que no es pausa manual
+            pausaManual = false;
+        });
+
     } else {
         console.warn('⚠️ Reproductor no configurado: faltan elementos.');
     }
