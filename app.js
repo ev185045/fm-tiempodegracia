@@ -227,6 +227,33 @@ document.addEventListener('DOMContentLoaded', function () {
     } else {
         console.warn('⚠️ Reproductor no configurado: faltan elementos.');
     }
+    // ===== MEDIA SESSION API (mejora la experiencia en segundo plano) =====
+if ('mediaSession' in navigator) {
+    audio.addEventListener('playing', () => {
+        navigator.mediaSession.metadata = new MediaMetadata({
+            title: 'Tiempo de Gracia',
+            artist: 'Radio Online',
+            album: 'En vivo',
+            artwork: [
+                { src: 'logo.png', sizes: '192x192', type: 'image/png' },
+                { src: 'logo.png', sizes: '512x512', type: 'image/png' }
+            ]
+        });
+        navigator.mediaSession.playbackState = 'playing';
+    });
+
+    audio.addEventListener('pause', () => {
+        navigator.mediaSession.playbackState = 'paused';
+    });
+
+    // Acciones desde la notificación o controles del sistema
+    navigator.mediaSession.setActionHandler('play', () => {
+        audio.play();
+    });
+    navigator.mediaSession.setActionHandler('pause', () => {
+        audio.pause();
+    });
+}
 
     // -------------------- CHAT EN VIVO (FIREBASE) --------------------
     if (mensajesDiv && nombreInput && mensajeInput && enviarBtn) {
